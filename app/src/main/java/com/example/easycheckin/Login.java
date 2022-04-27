@@ -10,6 +10,7 @@ import android.widget.Toast;
 public class Login extends AppCompatActivity {
 
     private Boolean loginSuccess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,10 @@ public class Login extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG).show();
         }
+    }
 
+    public void registerPgBtn(View view){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 }

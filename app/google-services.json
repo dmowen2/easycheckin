@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "50791631661",
+    "firebase_url": "https://easycheckin-2caab-default-rtdb.firebaseio.com",
     "project_id": "easycheckin-2caab",
     "storage_bucket": "easycheckin-2caab.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50791631661:android:3a414353c02ce94e9d21a4",
+        "android_client_info": {
+          "package_name": "com.example.easycheckin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50791631661-p7bncd2h68l27ah1inqk8susnf1cta83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyZYsVACamJESuUYbQXSGNRgJT2mekjXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50791631661-p7bncd2h68l27ah1inqk8susnf1cta83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:50791631661:android:3a53386422511c8e9d21a4",

@@ -1,12 +1,24 @@
 package com.example.easycheckin;
 
+import static android.Manifest.permission.VIBRATE;
+import static android.Manifest.permission_group.CAMERA;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import eu.livotov.labs.android.camview.ScannerLiveView;
+import eu.livotov.labs.android.camview.scanner.decoder.BarcodeDecoder;
+import eu.livotov.labs.android.camview.scanner.decoder.zxing.ZXDecoder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +67,77 @@ public class Scan extends Fragment {
         }
     }
 
+    private ScannerLiveView camera;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View inflat = inflater.inflate(R.layout.fragment_scan, container, false);
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 0);
+
+        } else {
+
+            // initialize scannerLiveview and textview.
+            camera = (ScannerLiveView) inflat.findViewById(R.id.camview);
+
+            camera.setScannerViewEventListener(new ScannerLiveView.ScannerViewEventListener() {
+                @Override
+                public void onScannerStarted(ScannerLiveView scanner) {
+                    // method is called when scanner is started
+                    Toast.makeText(inflat.getContext(), "Scanner Started", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onScannerStopped(ScannerLiveView scanner) {
+                    // method is called when scanner is stopped.
+                    Toast.makeText(inflat.getContext(), "Scanner Stopped", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onScannerError(Throwable err) {
+                    // method is called when scanner gives some error.
+                    Toast.makeText(inflat.getContext(), "Scanner Error: " + err.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCodeScanned(String data) {
+                    // method is called when camera scans the
+                    // qr code and the data from qr code is
+                    // stored in data in string format.
+                    System.out.println(data);
+                }
+            });
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scan, container, false);
+        return inflat;
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BarcodeDecoder decoder = new ZXDecoder();
+        // 0.5 is the area where we have
+        // to place red marker for scanning.
+        decoder.setScanAreaPercent(0.8);
+        // below method will set secoder to camera.
+        camera.setDecoder(decoder);
+        camera.startScanner();
+    }
+
+    @Override
+    public void onPause() {
+        // on app pause the
+        // camera will stop scanning.
+        camera.stopScanner();
+        super.onPause();
+    }
+
+
+
 }

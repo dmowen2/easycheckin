@@ -33,6 +33,7 @@
         android:id="@+id/registerBtn"
         android:layout_width="140dp"
         android:layout_height="81dp"
+        android:onClick="registerBtn"
         android:text="REGISTER"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
